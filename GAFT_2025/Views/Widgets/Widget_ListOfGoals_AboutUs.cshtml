@@ -1,0 +1,57 @@
+﻿@using Umbraco.Cms.Core.Routing
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlockGridItem>
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPublishedUrlProvider IPublishedUrlProvider
+
+@{
+    var _Widget_Goals = (Widget_ListOfGoals_AboutUs)Model.Content;
+}
+
+
+@if (_Widget_Goals != null && _Widget_Goals.Goals != null && _Widget_Goals.Goals.Count > 0)
+{
+    var Goals = _Widget_Goals.Goals.Where(a => !a.Content.Value<Boolean>(nameof(AboutUs_Goal.Hide)));
+    <!-- start rollOfGaft -->
+    <section class="rollOfGaft">
+        <div class="container">
+            <div class="row">
+                @*  <div class="white-btn-borderd">
+                    <a href="@_Widget_Goals.ReadMoreLink?.Url" class="">
+                        <span> @_Widget_Goals.ReadMoreLink?.Name </span>
+                        <img src="../images/shared/arrow-left-black.svg" alt="" />
+                    </a>
+                </div> *@
+                <div class="col-md-12">
+                    <div class="textSec">
+                        <h2 class="font30">@_Widget_Goals?.Title</h2>
+                        <p class="p16">
+                            @_Widget_Goals?.Details
+                        </p>
+                    </div>
+                </div>
+                @foreach (var item in Goals)
+                {
+                    var _AboutUs_Goal = (AboutUs_Goal)item.Content;
+                    if (_AboutUs_Goal != null)
+                    {
+                        var IconUrl = @_AboutUs_Goal?.Icon?.Url(IPublishedUrlProvider);
+
+                        <div class="col-md-4">
+                            <div class="mainCardBorder">
+                                <div class="bgIcon">
+                                    <img src="@IconUrl" alt="" />
+                                </div>
+                                <h3 class="font18">@_AboutUs_Goal?.Title</h3>
+                                <p class="p16">
+                                    @_AboutUs_Goal?.Details
+                                </p>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+    </section>
+    <!-- end rollOfGaft -->
+}

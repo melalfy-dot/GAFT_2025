@@ -1,0 +1,64 @@
+﻿@using Umbraco.Cms.Core.Routing
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlockGridItem>
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPublishedUrlProvider IPublishedUrlProvider
+
+@{
+    var _Widget_ListOfBanner = (Widget_ListOfBanner)Model.Content;
+}
+
+<section class="bannerMenu">
+    <div class="swiper homBanner">
+        <div class="swiper-wrapper">
+
+            @if (_Widget_ListOfBanner.BannerList != null)
+            {
+                @foreach (var item in _Widget_ListOfBanner.BannerList)
+                {
+                    var bannerItem = (Banner)item.Content;
+                    var ImageUrl = @bannerItem?.LinkImage?.Url(IPublishedUrlProvider);
+                    <div class="swiper-slide">
+                        <div class="contentBanner">
+                            <div class="bg-video-wrap">
+                                <img src="@ImageUrl" alt="" />
+                            </div>
+                            <div class="container">
+                                <div class="BNRtxt">
+                                    <h1 class="">
+                                        @bannerItem?.Title
+                                    </h1>
+                                    <p>
+                                        @bannerItem?.LinkDetails
+                                    </p>
+                                    @if (string.IsNullOrEmpty(bannerItem?.Link.ToLinkURL(""))is false){
+                                        <div class="white-btn">
+                                            <a href="#" class="">
+                                                <span> تعرف على المزيد </span>
+                                                <img src="../images/shared/arrow-left-black.svg"
+                                                     alt="" />
+                                            </a>
+                                        </div>
+                                    }
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end slider -->
+                }
+
+            }
+            
+        </div>
+        <div class="customPagi bannerPagi">
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <!-- end content of slider -->
+    <div class="chatEvent">
+        <a href="#!" class="bgIcon">
+            <img src="./images/shared/chatIcon.svg" alt="" />
+        </a>
+    </div>
+    <!-- end chat -->
+</section>

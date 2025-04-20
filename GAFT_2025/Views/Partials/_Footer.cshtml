@@ -1,0 +1,169 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models;
+@using Umbraco.Extensions;
+
+@{
+    //var master = (MasterPage)Model.Root();
+    //var master = (MasterPage)Umbraco.Content("a4f1ec6c-0802-4ddf-b9be-be120420464d");
+    var master = (Dt_HomePage)Umbraco.ContentAtRoot().FirstOrDefault();
+    // var column1 = master.MenuColumn1;
+    // var column2 = master.MenuColumn2;
+    // var column3 = master.MenuColumn3;
+    // var column4 = master.MenuColumn4;
+    // var FooterMenu = master.MenuFooter;
+}
+
+<footer class="footerDGA">
+    <div class="top-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="FooterLinks">
+                        <h4 class="">نظرة عامة</h4>
+                        <ul>
+                            <li>
+                                <a href="#!"> عن الهيئة </a>
+                            </li>
+                            <li>
+                                <a href="#!"> مجلس الإدارة </a>
+                            </li>
+                            <li>
+                                <a href="#!"> قيادات الهيئة </a>
+                            </li>
+                            <li>
+                                <a href="#!"> الهيكل التنظيمي </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="FooterLinks">
+                        <h4 class="">روابط هامة</h4>
+                        <ul>
+                            <li>
+                                <a href="#!"> التوظيف </a>
+                            </li>
+                            <li>
+                                <a href="#!"> ورش العمل والمؤتمرات </a>
+                            </li>
+                            <li>
+                                <a href="#!"> الإحصائيات والتقارير </a>
+                            </li>
+                            <li>
+                                <a href="#!"> النظام الإلكتروني للمعالجات </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="FooterLinks">
+                        <h4 class="">الاتصال والدعم</h4>
+                        <ul class="with-icons">
+                            <li>
+                                <a href="#!"> الأسئلة الشائعة </a>
+                            </li>
+                            <li>
+                                <a href="#!"> تواصل معنا </a>
+                            </li>
+                            <li>
+                                <a href="#!"> الدعم الفني بلغة الإشارة </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="FooterLinks">
+                        <h4 class="">تابعنا على</h4>
+                        <ul class="social">
+                            <li>
+                                <a href="#!">
+                                    <img src="/images/shared/instagram.svg" alt="" />
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#!">
+                                    <img src="/images/shared/linkedIn.svg" alt="" />
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#!">
+                                    <img src="/images/shared/x.svg" alt="" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="FooterLinks">
+                        <h4 class="">أدوات الاتاحة والوصول</h4>
+                        <ul class="Accessibility">
+                            <li>
+                                <a href="#!">
+                                    <img src="/images/shared/zoom-in-area.svg"
+                                         alt="" />
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#!">
+                                    <img src="/images/shared/zoom-out-area.svg"
+                                         alt="" />
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#!">
+                                    <img src="/images/shared/view-off.svg" alt="" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btm-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="footer-last">
+                        <ul class="dir-links">
+                            <li>
+                                <a href="#"> سياسة الخصوصة </a>
+                            </li>
+                            <li>
+                                <a href="#"> إخلاء المسئولية </a>
+                            </li>
+                            <li>
+                                <a href="#"> خريطة الموقع </a>
+                            </li>
+                        </ul>
+                        <div class="copyRights">
+                            <p class="">
+                                جميع الحقوق محفوظة - الهيئة العامة للتجارة الخارجية © 2025
+                            </p>
+                        </div>
+                        <!-- <ul class="dir-links-2">
+                          <li>
+                            <a href="#">
+                              الشروط والأحكام
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              سياسة الخصوصية
+                            </a>
+                          </li>
+
+                        </ul> -->
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="logos-box">
+                        <img src="/images/shared/gov-identifier.svg" alt="" />
+                        <img src="/images/shared/2030.svg" alt="" />
+                        <img src="/images/shared/DGAImg.png" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,79 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlockGridItem>
+@using Umbraco.Cms.Core.Models.Blocks
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IPublishedUrlProvider IPublishedUrlProvider
+
+@if (Model != null)
+{
+    var blockGridItem = (Widget_ItemsFromSource)Model.Content;
+
+    if (blockGridItem != null)
+    {
+        var _PageContent = (Dt_PageContent)blockGridItem.SourceLink;
+        if (_PageContent != null)
+        {
+            var _Widget_Goals_Target = _PageContent.PageBlockGridDetails?.FirstOrDefault(a => a.Content.ContentType.Alias == "Widget_ListOfGoals_AboutUs");
+            if (_Widget_Goals_Target != null)
+            {
+                var _Widget_Goals = (Widget_ListOfGoals_AboutUs)_Widget_Goals_Target.Content;
+
+
+                <!-- start rollOfGaft -->
+                <section class="rollOfGaft">
+                    <div class="container">
+                        <div class="row">
+                            <div class="white-btn-borderd">
+                                <a href="@blockGridItem.ReadMoreLink?.Url" class="">
+                                    <span> @blockGridItem.ReadMoreLink?.Name </span>
+                                    <img src="../images/shared/arrow-left-black.svg" alt="" />
+                                </a>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="textSec">
+                                    <h2 class="font30">@_Widget_Goals?.Title</h2>
+                                    <p class="p16">
+                                        @_Widget_Goals?.Details
+                                    </p>
+                                </div>
+                            </div>
+
+                            @if (_Widget_Goals != null && _Widget_Goals.Goals != null && _Widget_Goals.Goals.Count > 0)
+                            {
+                                var Goals = _Widget_Goals.Goals.Where(a => a.Content.Value<Boolean>(nameof(AboutUs_Goal.ShowInHome)));
+                                @foreach (var item in Goals)
+                                {
+                                    var _AboutUs_Goal = (AboutUs_Goal)item.Content;
+                                    if (_AboutUs_Goal != null)
+                                    {
+                                        var IconUrl = @_AboutUs_Goal?.Icon?.Url(IPublishedUrlProvider);
+
+                                        <div class="col-md-4">
+                                            <div class="mainCardBorder">
+                                                <div class="bgIcon">
+                                                    <img src="@IconUrl" alt="" />
+                                                </div>
+                                                <h3 class="font18">@_AboutUs_Goal?.Title</h3>
+                                                <p class="p16">
+                                                    @_AboutUs_Goal?.Details
+                                                </p>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            }
+
+                        </div>
+                    </div>
+                </section>
+                <!-- end rollOfGaft -->
+            }
+
+        }
+
+
+    }
+
+}

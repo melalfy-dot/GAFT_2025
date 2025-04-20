@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="MediaRemove" Version="1.0.4" />
+    <PackageReference Include="reCAPTCHA.AspNetCore" Version="3.0.10" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="9.0.4" />
     <PackageReference Include="Umbraco.Cms" Version="13.8.0" />
   </ItemGroup>
 
@@ -17,6 +19,13 @@
     <PackageReference Include="Umbraco.Community.Contentment" Version="5.1.0" />
     <PackageReference Include="uSync" Version="13.0.1" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Views\Forms\" />
   </ItemGroup>
 
   <PropertyGroup>

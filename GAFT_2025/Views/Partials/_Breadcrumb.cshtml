@@ -1,0 +1,35 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPublishedUrlProvider PublishedUrlProvider
+
+@{
+    int pageID = 1154;
+    bool isHome = Model != null && Model.Id == pageID;
+    bool IsArabic = true;
+    string Lang_URL = "/";
+
+    if (Model != null && Model.GetCultureFromDomains() != null && !string.IsNullOrEmpty(Model.GetCultureFromDomains()))
+    {
+        if (Model.GetCultureFromDomains().ToLower().Contains("en"))
+        {
+            IsArabic = false;
+            Lang_URL = "/en";
+        }
+        else
+        {
+            IsArabic = true;
+            Lang_URL = "/";
+        }
+    }
+
+    var title = Model.ToPageTitle();
+    int index = 1;
+    var list = Model.Ancestors<IPublishedContent>().Reverse();
+    var hideTitle = false;
+}
+
