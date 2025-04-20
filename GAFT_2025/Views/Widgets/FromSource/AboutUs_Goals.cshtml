@@ -14,7 +14,9 @@
         var _PageContent = (Dt_PageContent)blockGridItem.SourceLink;
         if (_PageContent != null)
         {
-            var _Widget_Goals_Target = _PageContent.PageBlockGridDetails?.FirstOrDefault(a => a.Content.ContentType.Alias == "Widget_ListOfGoals_AboutUs");
+            var _Widget_Goals_Target = _PageContent
+                                       .PageBlockGridDetails?
+                                       .FirstOrDefault(a => a.Content.ContentType.Alias == "Widget_ListOfGoals_AboutUs");
             if (_Widget_Goals_Target != null)
             {
                 var _Widget_Goals = (Widget_ListOfGoals_AboutUs)_Widget_Goals_Target.Content;
@@ -32,16 +34,18 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="textSec">
-                                    <h2 class="font30">@_Widget_Goals?.Title</h2>
+                                    <h2 class="font30">@blockGridItem?.Title</h2>
                                     <p class="p16">
-                                        @_Widget_Goals?.Details
+                                        @blockGridItem?.Details
                                     </p>
                                 </div>
                             </div>
 
                             @if (_Widget_Goals != null && _Widget_Goals.Goals != null && _Widget_Goals.Goals.Count > 0)
                             {
-                                var Goals = _Widget_Goals.Goals.Where(a => a.Content.Value<Boolean>(nameof(AboutUs_Goal.ShowInHome)));
+                                var Goals = _Widget_Goals.Goals
+                                .Where(a => a.Content.Value<Boolean>(nameof(AboutUs_Goal.ShowInHome)))
+                                .Take(blockGridItem.MaxRecords);
                                 @foreach (var item in Goals)
                                 {
                                     var _AboutUs_Goal = (AboutUs_Goal)item.Content;

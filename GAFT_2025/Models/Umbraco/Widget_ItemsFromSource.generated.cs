@@ -50,11 +50,19 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
+		/// Details
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("details")]
+		public virtual string Details => this.Value<string>(_publishedValueFallback, "details");
+
+		///<summary>
 		/// Hide Widget
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
-		[ImplementPropertyType("countOfEvents")]
-		public virtual bool CountOfEvents => this.Value<bool>(_publishedValueFallback, "countOfEvents");
+		[ImplementPropertyType("hideWidget")]
+		public virtual bool HideWidget => this.Value<bool>(_publishedValueFallback, "hideWidget");
 
 		///<summary>
 		/// Max Records

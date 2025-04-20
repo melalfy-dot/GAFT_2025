@@ -4,16 +4,16 @@
 @inject IPublishedUrlProvider IPublishedUrlProvider
 
 @{
-    var _Widget_ListOfBanner = (Widget_ListOfBanner)Model.Content;
+    var _Widget= (Widget_ListOfBanner)Model.Content;
 }
 
 <section class="bannerMenu">
     <div class="swiper homBanner">
         <div class="swiper-wrapper">
 
-            @if (_Widget_ListOfBanner.BannerList != null)
+            @if (_Widget.BannerList != null)
             {
-                @foreach (var item in _Widget_ListOfBanner.BannerList)
+                @foreach (var item in _Widget.BannerList)
                 {
                     var bannerItem = (Banner)item.Content;
                     var ImageUrl = @bannerItem?.LinkImage?.Url(IPublishedUrlProvider);

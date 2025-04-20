@@ -1,0 +1,74 @@
+﻿@using Umbraco.Cms.Core.Routing
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlockGridItem>
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPublishedUrlProvider IPublishedUrlProvider
+
+@{
+    var _Widget = (Widget_ListOfServices_Home)Model.Content;
+
+    <!-- start services -->
+    <section class="ourServicesSec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="textSec">
+                        <h2 class="font30"> @_Widget?.Title</h2>
+                        <p class="p16">
+                            @_Widget?.Details
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="swiper homeServices disableDesktop">
+                        <div class="swiper-wrapper">
+                            @if (_Widget?.Services != null)
+                            {
+                                @foreach (var item in _Widget.Services)
+                                {
+                                    var serviceItem = (Service)item.Content;
+
+                                    var IconUrl = serviceItem?.Icon?.Url(IPublishedUrlProvider);
+
+                                    <div class="swiper-slide">
+                                        <div class="mainCardWithBtn">
+                                            <div class="bgIcon opacityGreen">
+                                                <img src="@IconUrl" alt="" />
+                                            </div>
+                                            <h3 class="font18">@serviceItem?.Title</h3>
+                                            <p class="p16">
+                                                @serviceItem?.Details
+                                            </p>
+                                            <div class="green-btn">
+                                                <a href="@serviceItem?.ServiceUrl?.Url" class="">
+                                                    <span>@serviceItem?.ServiceUrl?.Name</span>
+                                                    <img src="/images/shared/arrow-left.svg" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end slide -->
+                                }
+
+                            }
+                        </div>
+
+                        <div class="showInMob">
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end text -->
+                <div class="col-md-6">
+                </div>
+                <!-- end card -->
+                <div class="col-md-6">
+                </div>
+                <!-- end card -->
+            </div>
+        </div>
+    </section>
+    <!-- end services -->
+}
