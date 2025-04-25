@@ -4,61 +4,78 @@
 @inject IPublishedUrlProvider IPublishedUrlProvider
 
 @{
-    var _Widget= (Widget_ListOfBanner)Model.Content;
+    var _Widget = (Widget_ListOfBanner)Model.Content;
 }
+@if (_Widget != null && _Widget.HideWidget is false)
+{
+    <section class="bannerMenu">
+        <div class="swiper homBanner">
+            <div class="swiper-wrapper">
 
-<section class="bannerMenu">
-    <div class="swiper homBanner">
-        <div class="swiper-wrapper">
-
-            @if (_Widget.BannerList != null)
-            {
-                @foreach (var item in _Widget.BannerList)
+                @if (_Widget.BannerList != null)
                 {
-                    var bannerItem = (Banner)item.Content;
-                    var ImageUrl = @bannerItem?.LinkImage?.Url(IPublishedUrlProvider);
-                    <div class="swiper-slide">
-                        <div class="contentBanner">
-                            <div class="bg-video-wrap">
-                                <img src="@ImageUrl" alt="" />
-                            </div>
-                            <div class="container">
-                                <div class="BNRtxt">
-                                    <h1 class="">
-                                        @bannerItem?.Title
-                                    </h1>
-                                    <p>
-                                        @bannerItem?.LinkDetails
-                                    </p>
-                                    @if (string.IsNullOrEmpty(bannerItem?.Link.ToLinkURL(""))is false){
-                                        <div class="white-btn">
-                                            <a href="#" class="">
-                                                <span> تعرف على المزيد </span>
-                                                <img src="../images/shared/arrow-left-black.svg"
-                                                     alt="" />
-                                            </a>
+                    var items = _Widget?.BannerList?
+                    .Where(p => !p.Content.Value<Boolean>(nameof(Banner.Hide)))
+                    .Where(p =>
+                    (p.Content.Value<DateTime>(nameof(Banner.PublishFrom)) == DateTime.MinValue && p.Content.Value<DateTime>(nameof(Banner.PublishTo)) == DateTime.MinValue)
+                    || (p.Content.Value<DateTime>(nameof(Banner.PublishFrom)) <= DateTime.Now && p.Content.Value<DateTime>(nameof(Banner.PublishTo)) >= DateTime.Now)
+                    || (p.Content.Value<DateTime>(nameof(Banner.PublishFrom)) <= DateTime.Now && p.Content.Value<DateTime>(nameof(Banner.PublishTo)) == DateTime.MinValue)
+                    || (p.Content.Value<DateTime>(nameof(Banner.PublishFrom)) == DateTime.MinValue && p.Content.Value<DateTime>(nameof(Banner.PublishTo)) >= DateTime.Now));
+
+                    if (items != null && items.Count() > 0)
+                    {
+                        foreach (var item in items)
+                        {
+                            var _Item = (Banner)item.Content;
+                            if (_Item != null)
+                            {
+                                var ImageUrl = @_Item?.LinkImage?.Url(IPublishedUrlProvider);
+
+                                <div class="swiper-slide">
+                                    <div class="contentBanner">
+                                        <div class="bg-video-wrap">
+                                            <img src="@ImageUrl" alt="" />
                                         </div>
-                                    }
-                                   
+                                        <div class="container">
+                                            <div class="BNRtxt">
+                                                <h1 class="">
+                                                    @_Item?.Title
+                                                </h1>
+                                                <p>
+                                                    @_Item?.LinkDetails
+                                                </p>
+                                                @if (string.IsNullOrEmpty(_Item?.Link.ToLinkURL("")) is false)
+                                                {
+                                                    <div class="white-btn">
+                                                        <a href="@_Item?.Link" class="">
+                                                            <span> @_Item?.Link?.Name </span>
+                                                            <img src="/images/shared/arrow-left-black.svg"
+                                                                 alt="" />
+                                                        </a>
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end slider -->
+                            }
+                            <!-- end slider -->
+                        }
+                    }
                 }
 
-            }
-            
+            </div>
+            <div class="customPagi bannerPagi">
+                <div class="swiper-pagination"></div>
+            </div>
         </div>
-        <div class="customPagi bannerPagi">
-            <div class="swiper-pagination"></div>
+        <!-- end content of slider -->
+        <div class="chatEvent">
+            <a href="#!" class="bgIcon">
+                <img src="/images/shared/chatIcon.svg" alt="" />
+            </a>
         </div>
-    </div>
-    <!-- end content of slider -->
-    <div class="chatEvent">
-        <a href="#!" class="bgIcon">
-            <img src="./images/shared/chatIcon.svg" alt="" />
-        </a>
-    </div>
-    <!-- end chat -->
-</section>
+        <!-- end chat -->
+    </section>
+}

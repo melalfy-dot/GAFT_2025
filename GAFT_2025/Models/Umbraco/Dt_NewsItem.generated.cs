@@ -88,6 +88,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string CssClass => global::Umbraco.Cms.Web.Common.PublishedModels.PageProperties.GetCssClass(this, _publishedValueFallback);
 
 		///<summary>
+		/// Page Icon
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("pageIcon")]
+		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops PageIcon => global::Umbraco.Cms.Web.Common.PublishedModels.PageProperties.GetPageIcon(this, _publishedValueFallback);
+
+		///<summary>
 		/// Redirect URL
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]

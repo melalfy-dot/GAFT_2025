@@ -50,12 +50,12 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
-		/// Details
+		/// Details: leave it empty if there is not detils
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("details")]
-		public virtual string Details => this.Value<string>(_publishedValueFallback, "details");
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString Details => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "details");
 
 		///<summary>
 		/// Hide Widget
@@ -65,14 +65,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual bool HideWidget => this.Value<bool>(_publishedValueFallback, "hideWidget");
 
 		///<summary>
-		/// Max Records
+		/// Max Records: set to 0 to get all records
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
 		[ImplementPropertyType("maxRecords")]
 		public virtual int MaxRecords => this.Value<int>(_publishedValueFallback, "maxRecords");
 
 		///<summary>
-		/// Read more link
+		/// Read more link: leave it empty if there is not link
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -88,7 +88,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent SourceLink => this.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(_publishedValueFallback, "sourceLink");
 
 		///<summary>
-		/// Source
+		/// Source: select source data
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -96,7 +96,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string SourceWidget => this.Value<string>(_publishedValueFallback, "sourceWidget");
 
 		///<summary>
-		/// Title
+		/// Title: leave it empty if there is not title
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]

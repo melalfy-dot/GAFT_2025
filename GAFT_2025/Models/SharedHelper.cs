@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
-using System.Data;
+﻿using System.Data;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.ComponentModel;
@@ -15,25 +13,12 @@ using System.Text;
 using File = System.IO.File;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Web.Common;
-using uSync;
-using Umbraco.Cms.Core.Models.Email;
-//using static System.Net.Mime.MediaTypeNames;
-using System.Drawing;
-using static Lucene.Net.Queries.Function.ValueSources.MultiFunction;
 using System.Web;
 using Umbraco.Cms.Core.Strings;
-
-
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Models;
-using Umbraco.Cms.Core.PublishedCache;
-using Umbraco.Extensions;
-using System.Diagnostics.Metrics;
-using Umbraco.Cms.Web.Common.PublishedModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using static Umbraco.Cms.Core.Constants.HttpContext;
-using static System.Net.Mime.MediaTypeNames;
-
+using Umbraco.Cms.Core.Models.Blocks;
+using Umbraco.Cms.Web.Common.PublishedModels;
 namespace NetCore.Models
 {
     public static class SharedHelper
@@ -1803,7 +1788,7 @@ namespace NetCore.Models
             {
                 if (page != null)
                 {
-                    pageTitle = page.Value("pageTitle").ToStringNull();
+                    pageTitle = page.Value(nameof(PageTitles.PageTitle)).ToStringNull();
                     if (!string.IsNullOrEmpty(pageTitle))
                     {
                         return pageTitle;
@@ -1821,7 +1806,7 @@ namespace NetCore.Models
 
             return pageTitle;
         }
-
+       
         public static string GetDateFormate(this object Date) => Convert.ToDateTime(Date).ToString("dd/MM/yyy");
 
         public static string ToIconURL(this IPublishedContent? image, string default_image = "")
@@ -2376,6 +2361,39 @@ namespace NetCore.Models
     //        return resourceKey;
     //    }
     //}
+
+   
+public class BlockListConverter
+    {
+        public static List<T> ConvertBlockList<T>(BlockListModel blockListModel)
+        {
+            var resultList = new List<T>();
+
+            if (blockListModel != null)
+            {
+                foreach (var block in blockListModel)
+                {
+                    // Assuming T has a parameterless constructor
+                    T item = Activator.CreateInstance<T>();
+
+                    foreach (var property in typeof(T).GetProperties())
+                    {
+                        var blockProperty = block.Content.Properties.FirstOrDefault(p => p.Alias == property.Name);
+                        if (blockProperty != null && property.CanWrite)
+                        {
+                            //var value = blockProperty.GetValue(blockProperty);
+                            //property.SetValue(item, value);
+                        }
+                    }
+
+                    resultList.Add(item);
+                }
+            }
+
+            return resultList;
+        }
+    }
+
 
 }
 

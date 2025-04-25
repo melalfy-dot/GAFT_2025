@@ -20,7 +20,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 {
 	/// <summary>Home Page</summary>
 	[PublishedModel("DT_HomePage")]
-	public partial class Dt_HomePage : PublishedContentModel, IPageBlockList, IPageProperties, IPageSeo
+	public partial class Dt_HomePage : PublishedContentModel, IFooter, IPageBlockList, IPageProperties, IPageSeo, IPageTitles
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -50,6 +50,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
+		/// Footer Page Widgets
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("footerPageWidgets")]
+		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockGridModel FooterPageWidgets => global::Umbraco.Cms.Web.Common.PublishedModels.Footer.GetFooterPageWidgets(this, _publishedValueFallback);
+
+		///<summary>
 		/// Page Widgets
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
@@ -64,6 +72,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("cssClass")]
 		public virtual string CssClass => global::Umbraco.Cms.Web.Common.PublishedModels.PageProperties.GetCssClass(this, _publishedValueFallback);
+
+		///<summary>
+		/// Page Icon
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("pageIcon")]
+		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops PageIcon => global::Umbraco.Cms.Web.Common.PublishedModels.PageProperties.GetPageIcon(this, _publishedValueFallback);
 
 		///<summary>
 		/// Redirect URL
@@ -319,5 +335,13 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
 		[ImplementPropertyType("umbracoNaviHide77")]
 		public virtual bool UmbracoNaviHide77 => global::Umbraco.Cms.Web.Common.PublishedModels.PageSeo.GetUmbracoNaviHide77(this, _publishedValueFallback);
+
+		///<summary>
+		/// Page Title: to override the page name
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("pageTitle")]
+		public virtual string PageTitle => global::Umbraco.Cms.Web.Common.PublishedModels.PageTitles.GetPageTitle(this, _publishedValueFallback);
 	}
 }

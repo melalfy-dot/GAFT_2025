@@ -4,54 +4,63 @@
 @inject IPublishedUrlProvider IPublishedUrlProvider
 
 @{
-    var _Widget_Goals = (Widget_ListOfGoals_AboutUs)Model.Content;
-}
+    var _Widget = (Widget_ListOfGoals_AboutUs)Model.Content;
+    var currentPage = Umbraco.AssignedContentItem;
+    var rootPage = Umbraco.ContentAtRoot().FirstOrDefault(a => a.ContentType.Alias == Dt_HomePage.ModelTypeAlias); // Assuming the first node is the home page
+    bool isHomePage = currentPage != null && currentPage.Id == rootPage?.Id;
 
+    if (_Widget != null && _Widget.Goals != null && _Widget.Goals.Count > 0 && _Widget.HideWidget is false)
+    {
+        var items = _Widget.Goals.Where(a => !a.Content.Value<Boolean>(nameof(AboutUs_Goal.Hide)));
 
-@if (_Widget_Goals != null && _Widget_Goals.Goals != null && _Widget_Goals.Goals.Count > 0)
-{
-    var Goals = _Widget_Goals.Goals.Where(a => !a.Content.Value<Boolean>(nameof(AboutUs_Goal.Hide)));
-    <!-- start rollOfGaft -->
-    <section class="rollOfGaft">
-        <div class="container">
-            <div class="row">
-                @*  <div class="white-btn-borderd">
-                    <a href="@_Widget_Goals.ReadMoreLink?.Url" class="">
-                        <span> @_Widget_Goals.ReadMoreLink?.Name </span>
-                        <img src="../images/shared/arrow-left-black.svg" alt="" />
-                    </a>
-                </div> *@
-                <div class="col-md-12">
-                    <div class="textSec">
-                        <h2 class="font30">@_Widget_Goals?.Title</h2>
-                        <p class="p16">
-                            @_Widget_Goals?.Details
-                        </p>
-                    </div>
-                </div>
-                @foreach (var item in Goals)
-                {
-                    var _AboutUs_Goal = (AboutUs_Goal)item.Content;
-                    if (_AboutUs_Goal != null)
-                    {
-                        var IconUrl = @_AboutUs_Goal?.Icon?.Url(IPublishedUrlProvider);
-
-                        <div class="col-md-4">
-                            <div class="mainCardBorder">
-                                <div class="bgIcon">
-                                    <img src="@IconUrl" alt="" />
-                                </div>
-                                <h3 class="font18">@_AboutUs_Goal?.Title</h3>
-                                <p class="p16">
-                                    @_AboutUs_Goal?.Details
-                                </p>
+        <!-- start rollOfGaft -->
+        <section class="rollOfGaft @(isHomePage is false?"ourRole":"")">
+            <div class="container @(isHomePage is false?"container2":"")">
+                @if(isHomePage is false){
+                    @:<div class="bg-gray innerPadding">
+                }
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="textSec">
+                            <h2 class="font30">@_Widget?.Title</h2>
+                            <div class="p16">
+                                @Html.Raw(_Widget?.Details)
                             </div>
                         </div>
-                    }
-                }
+                    </div>
+                    @if (items != null && items.Count() > 0)
+                    {
+                        foreach (var item in items)
+                        {
+                            var _Item = (AboutUs_Goal)item.Content;
+                            if (_Item != null)
+                            {  
+                                 var IconUrl = isHomePage is false?_Item?.Icon?.Url(IPublishedUrlProvider):
+                                               _Item?.IconForHomePage?.Url(IPublishedUrlProvider);
 
+                                <div class="col-md-4">
+                                    <div class="@(isHomePage is false?"mainCard":"mainCardBorder")">
+                                        <div class="bgIcon">
+                                            <img src="@IconUrl" alt="" />
+                                        </div>
+                                        <h3 class="font18">@_Item?.Title</h3>
+                                        <p class="p16">
+                                            @_Item?.Details
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+
+                </div>
+                @if (isHomePage)
+                {
+                    @:</div>
+                }
             </div>
-        </div>
-    </section>
-    <!-- end rollOfGaft -->
+        </section>
+        <!-- end rollOfGaft -->
+    }
+
 }

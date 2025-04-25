@@ -20,7 +20,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 {
 	/// <summary>Page Content</summary>
 	[PublishedModel("DT_PageContent")]
-	public partial class Dt_PageContent : PublishedContentModel, IPageBlockList, IPageChildrens, IPageContent, IPageProperties, IPageSeo
+	public partial class Dt_PageContent : PublishedContentModel, IPageBlockList, IPageChildrens, IPageContent, IPageDescription, IPageProperties, IPageSeo
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -74,12 +74,28 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString PageContentDetails => global::Umbraco.Cms.Web.Common.PublishedModels.PageContent.GetPageContentDetails(this, _publishedValueFallback);
 
 		///<summary>
+		/// Page Description
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("description")]
+		public virtual string Description => global::Umbraco.Cms.Web.Common.PublishedModels.PageDescription.GetDescription(this, _publishedValueFallback);
+
+		///<summary>
 		/// CssClass
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("cssClass")]
 		public virtual string CssClass => global::Umbraco.Cms.Web.Common.PublishedModels.PageProperties.GetCssClass(this, _publishedValueFallback);
+
+		///<summary>
+		/// Page Icon
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.0+a486d5d")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("pageIcon")]
+		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops PageIcon => global::Umbraco.Cms.Web.Common.PublishedModels.PageProperties.GetPageIcon(this, _publishedValueFallback);
 
 		///<summary>
 		/// Redirect URL

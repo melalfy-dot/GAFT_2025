@@ -7,7 +7,7 @@
     var item = (Widget_ItemsFromSource)Model.Content;
 }
 
-@if (item.ContentType.Alias == "Widget_ItemsFromSource")
+@if (item.ContentType.Alias == Widget_ItemsFromSource.ModelTypeAlias)
 {
     var partialViewName = "/Views/Widgets/FromSource/" + item.SourceWidget + ".cshtml";
     try

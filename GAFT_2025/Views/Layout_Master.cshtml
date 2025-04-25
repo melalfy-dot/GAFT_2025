@@ -32,10 +32,10 @@
                 IsArabic = true;
             }
 
-            var link = (Umbraco.Cms.Core.Models.Link)Model.Value("redirectURL");
-            if (link != null)
+            var redirectLinks = Model.Value<List<Umbraco.Cms.Core.Models.Link>>(nameof(PageProperties.RedirectUrl));
+            if (redirectLinks != null && redirectLinks.Count > 0)
             {
-                Context.Response.Redirect(Url.Content(link.ToLinkURL()));
+                Context.Response.Redirect(Url.Content(redirectLinks[0].ToLinkURL()));
             }
         }
     }
@@ -85,11 +85,11 @@
 
         @* @await Html.PartialAsync("PageBlockRichText") *@
 
-@*         @await Html.PartialAsync("_SharingIcons")
- *@    }
+        @*         @await Html.PartialAsync("_SharingIcons")
+ *@         }
 
     @await Html.PartialAsync("_Footer")
-
+  
     @* <partial name="Scripts" /> *@
     @await Html.PartialAsync("_Scripts")
 

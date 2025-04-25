@@ -8,9 +8,9 @@
 @inject IPublishedUrlProvider PublishedUrlProvider
 
 @{
-    var master = (Dt_HomePage)Umbraco.ContentAtRoot().FirstOrDefault();
-    int pageID = master.Id;
-    bool isHome = Model != null && Model.Id == pageID;
+     var currentPage = Umbraco.AssignedContentItem;
+    var master = Umbraco.ContentAtRoot().FirstOrDefault(a => a.ContentType.Alias == Dt_HomePage.ModelTypeAlias); // Assuming the first node is the home page
+    bool isHome = currentPage != null && currentPage.Id == master?.Id;
     bool IsArabic = true;
     string Lang = "ar";
     string Lang_URL = "";
@@ -38,15 +38,6 @@
             }
         }
 
-        // if (isHome) // if home page
-        // {
-        //     headerClass = "InHome";
-        // }
-        // else
-        // {
-        //     headerClass = "InPageContent";
-        // }
-
         Lang = IsArabic ? "ar" : "en";
         OtherLangText = IsArabic ? "English" : "عربي";
         OtherLangUrl = IsArabic ? Model?.Url("en-US") : Model?.Url("ar");
@@ -61,7 +52,7 @@
                              .Where(x =>
                                  x.IsVisible(PublishedValueFallback) &&
                                  types.Contains(x.ContentType.Alias))
-                             .Where(x => x.Value<Boolean>("ShowInMainMenu") == true)
+                             .Where(x => x.Value<Boolean>(nameof(PageProperties.ShowInMainMenu)) == true)
                              .ToArray();
         }
 
@@ -111,7 +102,7 @@
 
                                             children = item.Children?
                                             .Where(x => x.IsVisible(PublishedValueFallback) && types.Contains(x.ContentType.Alias))
-                                            .Where(x => x.Value<Boolean>("ShowInMainMenu") == true)
+                                            .Where(x => x.Value<Boolean>(nameof(PageProperties.ShowInMainMenu)) == true)
                                             .ToArray();
 
                                             var itemLink = string.IsNullOrEmpty(redirectURL) ? item.Url(PublishedUrlProvider) : redirectURL;
@@ -119,8 +110,7 @@
                                             {
                                                 itemLink = "#";
                                             }
-                                            var currentPage = Umbraco.AssignedContentItem;
-                                            var parent = currentPage.Parent;
+                                            var parent = currentPage?.Parent;
 
                                             var selected = currentPage?.Id==item?.Id ||currentPage?.Parent?.Id == item?.Id?"selected":"";
                                             <li class="nav-item dropdown">
@@ -178,8 +168,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <img src="./images/shared/earth.svg" alt="" />
+                            <a href="@OtherLangUrl">
+                                <img src="/images/shared/earth.svg" alt="" />
                             </a>
                         </li>
                     </ul>
@@ -188,7 +178,27 @@
         </div>
     </div>
 </section>
-
+<div class="modal modalSearch fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="SearchCustom">
+              <div class="forGroup">
+                <input type="text" class="searchInput" value="" placeholder="أدخل كلمة البحث...">
+                <button type="submit" class="searchSubmit">
+                  <img src="/images/shared/leading-iconSearcch.svg" alt="">
+                </button>
+              </div>
+              <div class="boxSloce">
+                <button button="" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  <img src="/images/shared/closeSearch.svg" alt="">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 @{
     void childPages(IPublishedContent[] childItems, IPublishedContent item)
     {
@@ -209,7 +219,7 @@
 
                 @:<div class="col-lg-3">
                 <!-- Start new column -->
-                @:<a href="#!" class="title">@item.ToPageTitle()</a>
+                @:<a href="@item.Url(PublishedUrlProvider)" class="title">@item.ToPageTitle()</a>
                 @:<ul>
             }
 

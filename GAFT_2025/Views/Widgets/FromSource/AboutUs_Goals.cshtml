@@ -7,69 +7,90 @@
 
 @if (Model != null)
 {
-    var blockGridItem = (Widget_ItemsFromSource)Model.Content;
+    var _Widget = (Widget_ItemsFromSource)Model.Content;
 
-    if (blockGridItem != null)
+    if (_Widget != null && _Widget.HideWidget is false && _Widget.SourceLink != null)
     {
-        var _PageContent = (Dt_PageContent)blockGridItem.SourceLink;
+        var _PageContent = (Dt_PageContent)_Widget.SourceLink;
         if (_PageContent != null)
         {
             var _Widget_Goals_Target = _PageContent
                                        .PageBlockGridDetails?
-                                       .FirstOrDefault(a => a.Content.ContentType.Alias == "Widget_ListOfGoals_AboutUs");
+                                       .FirstOrDefault(a => a.Content.ContentType.Alias == Widget_ListOfGoals_AboutUs.ModelTypeAlias);
             if (_Widget_Goals_Target != null)
             {
                 var _Widget_Goals = (Widget_ListOfGoals_AboutUs)_Widget_Goals_Target.Content;
+                var currentPage = Umbraco.AssignedContentItem;
+                var rootPage = Umbraco.ContentAtRoot().FirstOrDefault(a => a.ContentType.Alias == Dt_HomePage.ModelTypeAlias); // Assuming the first node is the home page
+                bool isHomePage = currentPage != null && currentPage.Id == rootPage?.Id;
 
 
                 <!-- start rollOfGaft -->
-                <section class="rollOfGaft">
-                    <div class="container">
-                        <div class="row">
-                            <div class="white-btn-borderd">
-                                <a href="@blockGridItem.ReadMoreLink?.Url" class="">
-                                    <span> @blockGridItem.ReadMoreLink?.Name </span>
-                                    <img src="../images/shared/arrow-left-black.svg" alt="" />
-                                </a>
-                            </div>
+                <section class="rollOfGaft @(isHomePage is false?"ourRole":"")">
+                    <div class="container @(isHomePage is false?"container2":"")">
+                        @if (isHomePage is false)
+                        {
+                            @:<div class="bg-gray innerPadding">
+                        }
+                        <div class="row">  
+                            @if(_Widget.ReadMoreLink != null)
+                            {
+                               <div class="white-btn-borderd">
+                                  <a href="@_Widget.ReadMoreLink?.Url" class="">
+                                      <span> @_Widget.ReadMoreLink?.Name </span>
+                                      <img src="/images/shared/arrow-left-black.svg" alt="" />
+                                  </a>
+                              </div>
+                            }
+                        
                             <div class="col-md-12">
                                 <div class="textSec">
-                                    <h2 class="font30">@blockGridItem?.Title</h2>
-                                    <p class="p16">
-                                        @blockGridItem?.Details
-                                    </p>
+                                    <h2 class="font30">@_Widget?.Title</h2>
+                                    <div class="p16">
+                                        @Html.Raw(_Widget?.Details)
+                                    </div>
                                 </div>
                             </div>
 
                             @if (_Widget_Goals != null && _Widget_Goals.Goals != null && _Widget_Goals.Goals.Count > 0)
                             {
-                                var Goals = _Widget_Goals.Goals
-                                .Where(a => a.Content.Value<Boolean>(nameof(AboutUs_Goal.ShowInHome)))
-                                .Take(blockGridItem.MaxRecords);
-                                @foreach (var item in Goals)
-                                {
-                                    var _AboutUs_Goal = (AboutUs_Goal)item.Content;
-                                    if (_AboutUs_Goal != null)
-                                    {
-                                        var IconUrl = @_AboutUs_Goal?.Icon?.Url(IPublishedUrlProvider);
+                                var items = _Widget_Goals.Goals.Where(a => a.Content.Value<Boolean>(nameof(AboutUs_Goal.ShowInHome)) &&
+                                a.Content.Value<Boolean>(nameof(AboutUs_Goal.Hide)) is false);
 
-                                        <div class="col-md-4">
-                                            <div class="mainCardBorder">
-                                                <div class="bgIcon">
-                                                    <img src="@IconUrl" alt="" />
+                                @if (items != null && items.Count() > 0)
+                                {
+                                    if (_Widget?.MaxRecords > 0)
+                                    {
+                                        items = items?.Take(_Widget.MaxRecords).ToList();
+                                    }
+                                    @foreach (var item in items)
+                                    {
+                                        var _Item = (AboutUs_Goal)item.Content;
+                                        if (_Item != null)
+                                        {
+                                            var IconUrl = isHomePage is false?_Item?.Icon?.Url(IPublishedUrlProvider):
+                                               _Item?.IconForHomePage?.Url(IPublishedUrlProvider);
+                                            <div class="col-md-4">
+                                                 <div class="@(isHomePage is false?"mainCard":"mainCardBorder")">
+                                                    <div class="bgIcon">
+                                                        <img src="@IconUrl" alt="" />
+                                                    </div>
+                                                    <h3 class="font18">@_Item?.Title</h3>
+                                                    <p class="p16">
+                                                        @_Item?.Details
+                                                    </p>
                                                 </div>
-                                                <h3 class="font18">@_AboutUs_Goal?.Title</h3>
-                                                <p class="p16">
-                                                    @_AboutUs_Goal?.Details
-                                                </p>
                                             </div>
-                                        </div>
+                                        }
                                     }
                                 }
-
                             }
 
                         </div>
+                        @if (isHomePage)
+                        {
+                        @:</div>
+                        }
                     </div>
                 </section>
                 <!-- end rollOfGaft -->
