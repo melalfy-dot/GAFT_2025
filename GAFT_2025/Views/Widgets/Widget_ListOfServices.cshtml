@@ -32,11 +32,12 @@
                                         if (_Item != null)
                                         {
                                             var IconUrl = _Item?.Icon?.Url(IPublishedUrlProvider);
+                                            var imgAltText = _Item?.Icon?.Value<string>(nameof(Image.AltText));
 
                                             <div class="swiper-slide">
                                                 <div class="mainCardWithBtn">
                                                     <div class="bgIcon opacityGreen">
-                                                        <img src="@IconUrl" alt="" />
+                                                        <img src="@IconUrl" alt="@imgAltText" />
                                                     </div>
                                                     <h3 class="font18">@_Item?.Title</h3>
                                                     <p class="p16">

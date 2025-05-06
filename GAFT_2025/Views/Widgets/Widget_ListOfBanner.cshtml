@@ -29,12 +29,12 @@
                             var _Item = (Banner)item.Content;
                             if (_Item != null)
                             {
-                                var ImageUrl = @_Item?.LinkImage?.Url(IPublishedUrlProvider);
-
+                                var imgUrl = _Item?.LinkImage?.Url(IPublishedUrlProvider);
+                                var imgAltText = _Item?.LinkImage?.Value<string>(nameof(Image.AltText));
                                 <div class="swiper-slide">
                                     <div class="contentBanner">
                                         <div class="bg-video-wrap">
-                                            <img src="@ImageUrl" alt="" />
+                                            <img src="@imgUrl" alt="@imgAltText" />
                                         </div>
                                         <div class="container">
                                             <div class="BNRtxt">
@@ -49,8 +49,7 @@
                                                     <div class="white-btn">
                                                         <a href="@_Item?.Link" class="">
                                                             <span> @_Item?.Link?.Name </span>
-                                                            <img src="/images/shared/arrow-left-black.svg"
-                                                                 alt="" />
+                                                            <img src="/images/shared/arrow-left-black.svg" alt="" />
                                                         </a>
                                                     </div>
                                                 }

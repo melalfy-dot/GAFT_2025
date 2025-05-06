@@ -29,12 +29,13 @@
                                     if (_Item != null)
                                     {
                                         var IconUrl = _Item?.IconImage?.Url(IPublishedUrlProvider);
+                                        var imgAltText = _Item?.IconImage?.Value<string>(nameof(Image.AltText));
                                         var PartnerUrl = _Item?.Url?.Url;
 
                                         <div class="swiper-slide">
                                             <div class="partner">
                                                 <a href="@PartnerUrl">
-                                                    <img src="@IconUrl" alt="" />
+                                                    <img src="@IconUrl" alt="@imgAltText" />
                                                 </a>
                                             </div>
                                         </div>

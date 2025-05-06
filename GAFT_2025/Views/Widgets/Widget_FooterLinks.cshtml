@@ -5,9 +5,6 @@
 
 @{
     var _Widget = (Widget_FooterLinks)Model.Content;
-    var currentPage = Umbraco.AssignedContentItem;
-    var rootPage = Umbraco.ContentAtRoot().FirstOrDefault(a => a.ContentType.Alias == Dt_HomePage.ModelTypeAlias); // Assuming the first node is the home page
-    bool isHomePage = currentPage != null && currentPage.Id == rootPage?.Id;
     <footer class="footerDGA">
         @if (_Widget != null && _Widget.Links != null && _Widget.Links.Count > 0 && _Widget.HideWidget is false)
         {
@@ -91,10 +88,11 @@
                         {
                             var _Item = (LinkItem)item.Content;
                             var IconOrImageUrl = _Item?.IconOrImage?.Url(IPublishedUrlProvider);
+                            var imgAltText = _Item?.IconOrImage?.Value<string>(nameof(Image.AltText));
 
                             <li>
                                 <a href="@_Item?.Link?.Url" target="@_Item?.Link?.Target">
-                                    <img src="@IconOrImageUrl" alt="">
+                                    <img src="@IconOrImageUrl" alt="@imgAltText">
                                 </a>
                             </li>
                         }
@@ -173,8 +171,9 @@
                         {
                             var _Item = (LinkItem)item.Content;
                             var IconOrImageUrl = _Item?.IconOrImage?.Url(IPublishedUrlProvider);
+                            var imgAltText = _Item?.IconOrImage?.Value<string>(nameof(Image.AltText));
 
-                            <img src="@IconOrImageUrl" alt="">
+                            <img src="@IconOrImageUrl" alt="@imgAltText">
                         }
                     }
                 </div>

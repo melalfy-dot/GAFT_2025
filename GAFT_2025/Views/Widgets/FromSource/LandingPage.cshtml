@@ -25,12 +25,13 @@
                             @foreach (Dt_PageContent item in items)
                             {
                                 var pageIcon_Url = item?.PageIcon?.Url(IPublishedUrlProvider);
+                                var imgAltText = item?.PageIcon?.Value<string>(nameof(Image.AltText));
 
                                 <div class="col-lg-4">
                                     <div class="listCard">
                                         <div class="cardIcon">
                                             <div class="bg">
-                                                <img src="@pageIcon_Url" alt="">
+                                                <img src="@pageIcon_Url" alt="@imgAltText">
                                             </div>
                                         </div>
                                         <h2 class="font18">

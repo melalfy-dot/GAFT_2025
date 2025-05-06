@@ -59,11 +59,13 @@
                                         foreach (Dt_VersionsItem item in items)
                                         {
                                             var ImageUrl = item?.Image?.Url(IPublishedUrlProvider);
+                                            var imgAltText = item?.Image?.Value<string>(nameof(Image.AltText));
+
                                             var fileUrl = item?.File?.Url(IPublishedUrlProvider);
                                             <div class="swiper-slide">
                                                 <div class="sharedCard">
                                                     <div class="SDimg">
-                                                        <img src="@ImageUrl" alt="">
+                                                        <img src="@ImageUrl" alt="@imgAltText">
                                                     </div>
                                                     <!-- end img -->
                                                     <h3 class="font18 multi-ellipsis">@item?.Name</h3>

@@ -28,12 +28,14 @@
                         {
                             var _Item = (Number)item.Content;
                             var IconUrl = _Item?.IconI?.Url(IPublishedUrlProvider);
+                            var imgAltText = _Item?.IconI?.Value<string>(nameof(Image.AltText));
+
                             if (_Item != null)
                             {
                                 <div class="col-lg-3">
                                     <div class="wapperNum ">
                                         <div class="bgIcon opacityGreen">
-                                            <img src="@IconUrl" alt="">
+                                            <img src="@IconUrl" alt="@imgAltText">
                                         </div>
                                         <div class="boxNum">
                                             <h4 class="counter" style="visibility: visible;">@_Item?.NumberValue</h4>

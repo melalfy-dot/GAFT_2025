@@ -18,12 +18,13 @@
                         @foreach (var item in items)
                         {
                             var _Item = (Widget_ContentCard)item.Content;
-                            var iconImage_Url = @_Item?.IconOrImage?.Url(IPublishedUrlProvider);
+                            var iconImage_Url = _Item?.IconOrImage?.Url(IPublishedUrlProvider);
+                            var imgAltText = _Item?.IconOrImage?.Value<string>(nameof(Image.AltText));
 
                             <div class="col-12">
                                 <div class="aboutUs-card">
                                     <div class="logo">
-                                        <img src="@iconImage_Url" alt="">
+                                        <img src="@iconImage_Url" alt="@imgAltText">
                                     </div>
                                     <h2 class="font18">
                                         @Html.Raw(_Item?.Title)

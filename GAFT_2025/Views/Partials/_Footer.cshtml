@@ -5,11 +5,10 @@
 @using Umbraco.Extensions;
 
 @{
-    // var currentPage = Umbraco.AssignedContentItem;
+    var currentPage = Umbraco.AssignedContentItem;
     var master = Umbraco.ContentAtRoot().FirstOrDefault(a => a.ContentType.Alias == Dt_HomePage.ModelTypeAlias); // Assuming the first node is the home page
-    // bool isHome = currentPage != null && currentPage.Id == master?.Id;
-    // if (isHome is false && master != null)
-    if (master != null)
+    bool isHome = currentPage != null && currentPage.Id == master?.Id;
+    if (isHome is false && master != null)
     {
         var FooterBlockGridItem = ((Dt_HomePage)master).FooterPageWidgets?.FirstOrDefault();
         if (FooterBlockGridItem != null)

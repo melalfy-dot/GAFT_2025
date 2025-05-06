@@ -68,12 +68,14 @@
                                         var _Item = (AboutUs_Goal)item.Content;
                                         if (_Item != null)
                                         {
-                                            var IconUrl = isHomePage is false?_Item?.Icon?.Url(IPublishedUrlProvider):
-                                               _Item?.IconForHomePage?.Url(IPublishedUrlProvider);
+                                              var iconImg = isHomePage is false?_Item?.Icon:_Item?.IconForHomePage;
+                                            var iconUrl = iconImg?.Url(IPublishedUrlProvider);
+                                            var imgAltText = iconImg?.Value<string>(nameof(Image.AltText));
+
                                             <div class="col-md-4">
                                                  <div class="@(isHomePage is false?"mainCard":"mainCardBorder")">
                                                     <div class="bgIcon">
-                                                        <img src="@IconUrl" alt="" />
+                                                        <img src="@iconUrl" alt="@imgAltText" />
                                                     </div>
                                                     <h3 class="font18">@_Item?.Title</h3>
                                                     <p class="p16">

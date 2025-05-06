@@ -8,12 +8,13 @@
 
     if (_Widget != null && _Widget.Hide is false)
     {
-        var iconImage_Url = @_Widget?.IconOrImage?.Url(IPublishedUrlProvider);
-
+        var iconImage_Url = _Widget?.IconOrImage?.Url(IPublishedUrlProvider);
+        var imgAltText = _Widget?.IconOrImage?.Value<string>(nameof(Image.AltText));
+        
         <div class="col-12">
             <div class="aboutUs-card">
                 <div class="logo">
-                    <img src="@iconImage_Url" alt="">
+                    <img src="@iconImage_Url" alt="@imgAltText">
                 </div>
                 <h2 class="font18">
                     @Html.Raw(_Widget?.Title)
